@@ -20,7 +20,7 @@ if (document.readyState == "loading") {
 
 function ready() {
     var removeCartButtons = document.getElementsByClassName("cart-remove")
-    console.log(removeCartButtons)
+    // console.log(removeCartButtons)
     for (var i = 0; i < removeCartButtons.length; i++){
         var button =removeCartButtons[i]
         button.addEventListener('click', removeCartItem)
@@ -31,14 +31,23 @@ function ready() {
         var input = quantityInputs[i];
         input.addEventListener("change", quantityChanged)
     }
+    //add to cart
+
+    var addCart = document.getElementsByClassName("add-cart" )
+    for (var i = 0; i < addCart.length; i++){
+        var button = addCart[i]
+        button.addEventListener("click", addCartClicked)
+    }
 }
 
+
+//Remove Iteams From Cart
 function removeCartItem(event) {
     var buttonClicked = event.target
     buttonClicked.parentElement.remove()
     updatetotal()
 }
-
+//Quantity changes 
 function quantityChanged(event){
     var input = event.target
     if (isNaN(input.value) || input.value <= 0 ){
@@ -46,9 +55,27 @@ function quantityChanged(event){
     }
     updatetotal()
 }
+//add to cart
 
+function addCartClicked(event){
+    var button = event.target
+    var shopProducts = button.parentElement
+    var title =  shopProducts.getElementsByClassName("product-title")[0].innerText
+    var price= shopProducts.getElementsByClassName("price")[0].innerText
+    var productImg = shopProducts.getElementsByClassName("product-img")[0].src
+    addProductToCart(title, price, productImg)
+    updatetotal()
+}
+function addProductToCart(title, price, productImg) {
+    var cartShopBox = document.createElement("div")
+    var cartItems = document.getElementsByClassName("cart-contnent")[0]
+    var cartItemsNames = cartItems.getElementsByClassName("cart-product-title")
+    for (var i = 0; i < cartItemsNames.length; i++){
+        alert("You have already add this item to cart")
+    }
+}
 
-
+//update Total
 function updatetotal() {
     var cartContent = document.getElementsByClassName("cart-content")[0]
     var cartBoxes = cartContent.getElementsByClassName("cart-box")
